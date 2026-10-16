@@ -6,6 +6,7 @@ import csv
 import math
 from pathlib import Path
 import matplotlib
+from matplotlib.ticker import ScalarFormatter
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -27,10 +28,13 @@ def f(x: float) -> float:
 
 
 def particion_equiespaciada(n: int) -> list[float]:
-    """Construye N subintervalos iguales, con N+1 puntos incluyendo extremos."""
-    if not isinstance(n, int) or n < 1:
-        raise ValueError("N debe ser un entero positivo")
-    return [A + (B - A) * i / n for i in range(n + 1)]
+    """Construye N puntos equiespaciados, incluyendo -1 y 1.
+
+    N puntos consecutivos forman N-1 subintervalos.
+    """
+    if not isinstance(n, int) or isinstance(n, bool) or n < 2:
+        raise ValueError("N debe ser un entero de al menos 2 puntos")
+    return [A + (B - A) * i / (n - 1) for i in range(n)]
 
 
 def metodo_rectangulos(puntos: list[float]) -> float:
@@ -122,22 +126,30 @@ def guardar_grafica_comparativa(nombre: str, registros: list[dict[str, float | i
     valores_n = [int(r["N"]) for r in registros]
     figura, eje = plt.subplots(figsize=(10, 6))
 
-    for columna, etiqueta, marcador in (
-        ("aprox_rectangulos", "Rectángulos", "o"),
-        ("aprox_trapecio", "Trapecio", "s"),
-        ("aprox_punto_medio", "Punto Medio", "^"),
+    for columna, etiqueta, marcador, estilo, orden in (
+        ("aprox_rectangulos", "Rectángulos", "o", "--", 4),
+        ("aprox_trapecio", "Trapecio", "s", "-", 3),
+        ("aprox_punto_medio", "Punto Medio", "^", "-", 2),
     ):
         eje.plot(
             valores_n,
             [float(r[columna]) for r in registros],
-            marcador + "-",
+            marcador + estilo,
             label=etiqueta,
             markersize=4,
+            markerfacecolor="none" if columna == "aprox_rectangulos" else None,
+            zorder=orden,
         )
 
     eje.axhline(PI, color="black", linestyle="--", label="π teórico")
-    eje.set_title(f"Comparación de Métodos Numéricos (Rango: {nombre})")
-    eje.set_xlabel("Número de subintervalos (N)")
+    etiquetas_rango = {
+        "10_a_100": "N = 10, 20, ..., 100",
+        "100_a_1000": "N = 100, 200, ..., 1000",
+        "1000_a_10000": "N = 1000, 2000, ..., 10000",
+    }
+    eje.yaxis.set_major_formatter(ScalarFormatter(useOffset=False))
+    eje.set_title(f"Comparación de métodos numéricos ({etiquetas_rango[nombre]})")
+    eje.set_xlabel("Número de puntos de la partición (N)")
     eje.set_ylabel("Valor de la aproximación")
     eje.set_xlim(min(valores_n), max(valores_n))
     
@@ -162,6 +174,7 @@ def main() -> None:
     DIRECTORIO_RESULTADOS.mkdir(exist_ok=True)
     print("Comparación de Métodos de Integración Numérica para f(x) = 2*sqrt(1 - x²)")
     print(f"Valor exacto: pi = {PI:.15f}")
+    print("N representa puntos de la partición; se forman N-1 subintervalos.")
 
     for nombre, rango in RANGOS_N.items():
         registros = generar_registros(list(rango))
