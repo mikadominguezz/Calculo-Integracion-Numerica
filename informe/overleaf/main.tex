@@ -1,0 +1,145 @@
+\documentclass[12pt,a4paper]{article}
+
+%------------------------------------------------
+% PAQUETES
+%------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+%------------------------------------------------
+% ESTILO PARA EL CÓDIGO PYTHON
+%------------------------------------------------
+\definecolor{codegreen}{rgb}{0,0.45,0}
+\definecolor{codegray}{rgb}{0.45,0.45,0.45}
+\definecolor{codepurple}{rgb}{0.55,0,0.75}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.93}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    % permite tildes dentro del código
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1
+}
+\lstset{style=mystyle}
+
+%------------------------------------------------
+% ENCABEZADOS
+%------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Cálculo Aplicado}
+\fancyhead[R]{Integración numérica}
+\fancyfoot[C]{\thepage}
+
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=blue
+}
+
+%------------------------------------------------
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PORTADA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{1.5cm}
+
+%-------------------------------------------------
+% Logo de la UCU
+% Subir el archivo "logo.png" al proyecto de Overleaf
+%-------------------------------------------------
+\includegraphics[width=10cm]{logo.png}
+
+\vspace{1.8cm}
+
+{\Huge\textbf{Comparación de Métodos de Integración Numérica}}
+
+\vspace{0.6cm}
+
+{\Large Proyecto grupal}
+
+\vspace{2cm}
+
+\renewcommand{\arraystretch}{1.6}
+
+\begin{tabular}{rl}
+\textbf{Asignatura:} & Cálculo Aplicado \\
+\textbf{Estudiantes:} & Nombre del estudiante 1 \\
+                      & Nombre del estudiante 2 \\
+                      & Nombre del estudiante 3 \\
+\textbf{Docente:} & Nombre del docente \\
+\textbf{Fecha:} & \today \\
+\end{tabular}
+
+\vfill
+
+{\large Universidad Católica del Uruguay}
+\vspace{0.3cm}
+
+{\Large Campus Punta del Este}
+
+\end{center}
+
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NUMERACIÓN ROMANA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{roman}
+
+\section*{Resumen}
+
+En este trabajo aproximamos numéricamente la integral \(\int_{-1}^{1}2\sqrt{1-x^2}\,dx=\pi\) con distintos métodos de integración numérica implementados en Python. En el Ejercicio 1 calculamos las sumas inferior y superior con particiones equiespaciadas y comprobamos que ambas convergen a \(\pi\), lo que confirma que la función es integrable de Riemann. En el Ejercicio 2 comparamos tres formas de construir la partición (equiespaciada, aleatoria uniforme y cosenoidal) y encontramos que la cosenoidal da el menor error en todos los casos, porque concentra los puntos cerca de los extremos, donde la curva es más empinada. En el Ejercicio 3 comparamos los métodos de rectángulos, trapecio y punto medio sobre una misma partición equiespaciada: el punto medio fue el más preciso, rectángulos y trapecio coincidieron porque la función vale cero en los extremos, y tanto el trapecio como el punto medio convergieron mucho más rápido que las sumas de Darboux.
+
+\clearpage
+
+\tableofcontents
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NUMERACIÓN ARÁBIGA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{arabic}
+
+\input{informe}
+
+\end{document}
