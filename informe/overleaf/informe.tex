@@ -3,6 +3,9 @@
 % Se incluye desde main.tex con \input{informe}
 %=====================================================================
 
+% Los bloques de código se llaman "Código 1, 2, 3" en lugar de "Listing"
+\renewcommand{\lstlistingname}{Código}
+
 %=====================================================================
 \section{Ejercicio 1: Convergencia de las sumas inferior y superior}
 %=====================================================================
@@ -35,7 +38,7 @@ Como la función es simétrica respecto del eje \(y\), su valor aumenta desde lo
 
 \subsection{Implementación en Python}
 
-El programa utilizado calcula las sumas inferior y superior para cada valor de \(N\), obtiene los residuos respecto de \(\pi\), exporta los resultados a archivos CSV y genera las gráficas que se insertan en este informe.
+El programa, escrito en Python (Python Software Foundation, s.f.), calcula las sumas inferior y superior para cada valor de \(N\), obtiene los residuos respecto de \(\pi\), exporta los resultados a archivos CSV y genera las gráficas que se insertan en este informe. Las gráficas se realizaron con la librería Matplotlib (Hunter, 2007).
 
 \begin{lstlisting}[language=Python,caption={Código de Python para calcular las sumas y generar tablas y gráficas}]
 import csv
@@ -242,7 +245,7 @@ Las gráficas permiten observar cómo las sumas inferior y superior se aproximan
 
 \subsection{Conclusión sobre la integrabilidad de Riemann}
 
-La función \(f(x)=2\sqrt{1-x^2}\) es continua en todo el intervalo cerrado y acotado \([-1,1]\). Por el teorema que establece que toda función continua en un intervalo cerrado y acotado es integrable de Riemann, se concluye que la función es integrable. Al refinar la partición, las sumas inferior y superior convergen al valor exacto de la integral:
+La función \(f(x)=2\sqrt{1-x^2}\) es continua en todo el intervalo cerrado y acotado \([-1,1]\). Por el teorema que establece que toda función continua en un intervalo cerrado y acotado es integrable de Riemann (Stewart, 2012, p.~373), se concluye que la función es integrable. Al refinar la partición, las sumas inferior y superior convergen al valor exacto de la integral:
 \[
 \lim_{N\to\infty}L_N=\lim_{N\to\infty}U_N=\pi.
 \]
@@ -254,7 +257,7 @@ Los resultados numéricos muestran este comportamiento: la suma inferior se apro
 
 \subsection{Introducción}
 
-En esta sección exploramos cómo la distribución de los puntos en \([-1,1]\) afecta la precisión de la aproximación. Como la consigna indica que es indiferente usar sumas superiores o inferiores, utilizamos \textbf{sumas superiores} de forma consistente, por lo que todos los residuos \(U_N-\pi\) son positivos: cuanto más chico, mejor. Evaluamos tres tipos de particiones:
+En esta sección exploramos cómo la distribución de los puntos en \([-1,1]\) afecta la precisión de la aproximación. Como la consigna indica que es indiferente usar sumas superiores o inferiores (Universidad Católica del Uruguay, 2026), utilizamos \textbf{sumas superiores} de forma consistente, por lo que todos los residuos \(U_N-\pi\) son positivos: cuanto más chico, mejor. Evaluamos tres tipos de particiones:
 \begin{enumerate}
     \item \textbf{Equiespaciada:} subintervalos de igual longitud, \(\Delta x = 2/N\).
     \item \textbf{Aleatoria uniforme:} además de los extremos \(-1\) y \(1\), se eligen \(N-1\) puntos al azar con distribución uniforme en \((-1,1)\) y se ordenan. Se usa una semilla fija para que los resultados se puedan repetir.
@@ -715,3 +718,23 @@ Por último, el error de los tres métodos baja a un ritmo de aproximadamente \(
 %=====================================================================
 
 En los tres ejercicios aproximamos \(\pi\) como el área bajo \(f(x)=2\sqrt{1-x^2}\), y todos los métodos convergieron al valor exacto al aumentar \(N\), como corresponde a una función continua e integrable de Riemann. Sin embargo, no todas las estrategias mejoran igual. Cambiar la forma de la partición (Ejercicio 2) redujo el error de la suma superior entre un 10\,\% y un 21\,\%, pero mantuvo el mismo ritmo de convergencia que en el Ejercicio 1, donde el error se dividía por 10 cada vez que \(N\) se multiplicaba por 10. En cambio, cambiar la forma de calcular el área de cada subintervalo (Ejercicio 3) cambió el ritmo: con trapecio y punto medio el error se dividió por 32, y el punto medio fue el método más preciso de todos los que probamos.
+
+%=====================================================================
+\section*{Referencias}
+\addcontentsline{toc}{section}{Referencias}
+%=====================================================================
+
+\begingroup
+\setlength{\parindent}{-1.27cm}
+\setlength{\leftskip}{1.27cm}
+\setlength{\parskip}{6pt}
+
+Hunter, J. D. (2007). Matplotlib: A 2D graphics environment. \textit{Computing in Science \& Engineering, 9}(3), 90--95. \url{https://doi.org/10.1109/MCSE.2007.55}
+
+Python Software Foundation. (s.f.). \textit{Python} [Software]. \url{https://www.python.org}
+
+Stewart, J. (2012). \textit{Cálculo de una variable: Trascendentes tempranas} (7.ª ed.; M. C. Rodríguez Pedroza, Trad.). Cengage Learning.
+
+Universidad Católica del Uruguay. (2026). \textit{Comparación de métodos de integración numérica} [Consigna del proyecto grupal, Cálculo Aplicado]. Facultad de Ingeniería y Tecnología.
+
+\endgroup
